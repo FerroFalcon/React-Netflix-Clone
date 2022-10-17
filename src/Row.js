@@ -40,8 +40,8 @@ function Row({ title, fetchUrl, isLargeRow }) {
     } else {
       movieTrailer(movie?.name || "")
         .then((url) => {
-          const urlParams = new URLSearchParams(URL(url).search);
-          console.log(urlParams.get("v"));
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +57,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
           <img
             // using id is an efficient way to render things
             key={movie.id}
-            onClick={(movie) => handleClick(movie)}
+            onClick={() => handleClick(movie)}
             className={`row__poster ${isLargeRow && "row__posterLarge"}`}
             src={`${base_url}${
               isLargeRow ? movie.poster_path : movie.backdrop_path
